@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rest参数</title>
+</head>
+<body>
+<h2>函数的length属性，不包括 rest 参数。</h2>
+<pre>
+(function(a) {}).length  // 1
+(function(...a) {}).length  // 0
+(function(a, ...b) {}).length  // 1
+</pre>
+<h2>注意，rest 参数之后不能再有其他参数（即只能是最后一个参数），否则会报错。</h2>
+<h2>ES6 引入 rest 参数（形式为“...变量名”），用于获取函数的多余</h2>
+<pre>
+    function add(...values) {
+        let sum = 0;
+        for (var val of values) {
+            sum += val;
+        }
+        return sum;
+    }
+
+add(2, 5, 3) // 10
+</pre>
+<script>
+    function add(...values) { //形式为 ...变量名
+        let sum = 0;
+        for (let val of values) {
+            sum += val;
+        }
+        return sum;
+    }
+
+    console.log(add(2, 5, 3));
+
+    //    拷贝数组
+    let items = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const itemsCopy = [...items];
+    items = [1, 2, 3];
+    console.log('copy:' + itemsCopy);
+    console.log(items);
+
+    //    不要在函数体内使用arguments变量，使用rest运算符（...）代替。因为rest运算符显式表明你想要获取参数，而且arguments是一个类似数组的对象，而rest运算符可以提供一个真正的数组。
+
+    // bad
+    function concatenateAll() {
+        const args = Array.prototype.slice.call(arguments);
+        return args.join('');
+    }
+
+    // good
+    function concatenateAll(...args) {
+        return args.join('');
+    }
+
+</script>
+</body>
+</html>
