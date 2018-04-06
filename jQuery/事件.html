@@ -23,7 +23,7 @@
 
         $('a').on('click',function(e){
             e.preventDefault();
-            //.....
+            //.....阻止默认事件
 
 
 
@@ -31,22 +31,22 @@
 
 
 
-//        $('#aa').on('focusin',function(){
-//            console.log(111111);
-//        });
-//
-//        $('#div1').on('focusin',function(){
-//            console.log(222222);
-//        });
+    //    $('#aa').on('focusin',function(){
+    //        console.log(111111);
+    //    });
+
+    //    $('#div1').on('focusin',function(){
+    //        console.log(222222);
+    //    });
 
 
-//        $('#aa').on('focus',function(){
-//            $(this).after('<span>haha</span>')
-//        });
-//        $('#btn2').on('click',function(){
-//            $('#aa').trigger('focus');
-////            $('#aa').triggerHandler('focus');
-//        })
+       $('#aa').on('focus',function(){
+           $(this).after('<span>haha</span>')
+       });
+       $('#btn2').on('click',function(){
+           $('#aa').trigger('focus');
+           $('#aa').triggerHandler('focus');
+       })
 
 
 

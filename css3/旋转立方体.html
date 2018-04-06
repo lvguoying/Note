@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>旋转立方体</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #000;
+            perspective: 800px;
+            /*perspective-origin: center -100%;*/
+
+        }
+
+        #container {
+            width: 200px;
+            height: 200px;
+            margin: 150px auto;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 3s linear infinite;
+        }
+
+        @-webkit-keyframes rotateCube {
+            from {
+
+            }
+            to {
+                transform: rotateX(-360deg) rotateY(-720deg);
+            }
+        }
+
+        #container .cube {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 40px;
+            line-height: 200px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            position: absolute;
+            /*transform: rotate(45deg);*/
+
+        }
+
+        .four {
+            transform: rotateY(180deg) scale3d(1.2, 1.2, 1.2) translateZ(100px); /*scale3d可以整体缩放，但是要写前面否则无效*/
+        }
+
+        .one {
+            transform: rotateX(90deg) scale3d(1.2, 1.2, 1.2) translateZ(100px);
+        }
+
+        .six {
+            transform: rotateY(-90deg) scale3d(1.2, 1.2, 1.2) translateZ(100px);
+        }
+
+        .five {
+            transform: rotateY(90deg) scale3d(1.2, 1.2, 1.2) translateZ(100px);
+        }
+
+        .three {
+            transform: rotateX(-90deg) scale3d(1.2, 1.2, 1.2) translateZ(100px);
+        }
+
+        .two {
+            transform: scale3d(1.2, 1.2, 1.2) translateZ(100px);
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <div class="cube one">1</div>
+    <div class="cube two">2</div>
+    <div class="cube three">3</div>
+    <div class="cube four">4</div>
+    <div class="cube five">5</div>
+    <div class="cube six">6</div>
+</div>
+</body>
+</html>

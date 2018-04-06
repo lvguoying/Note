@@ -22,7 +22,7 @@
 <script>
 
     //$('#div1').has('div').css('background-color', 'red');
-    $('#div1').closest('html');
+    // $('#div1').closest('html');
 //    $('li.third-item').contents('div').contents('p')
 //            .css('background-color', 'red').addBack().css('background-color', 'blue')
 //
@@ -31,26 +31,26 @@
 //            .css('background-color', 'red').end().css('background-color', 'blue')
 //            .end().css('background-color', 'green');
 
-//    $('li').each(function(index,elem){
-//        console.log(index + elem);
-//    })
-    //$('li').contents('p').css('background-color', 'red');
-//    $('li.third-item').nextAll().andSelf()
-//            .css('background-color', 'red');
+   $('li').each(function(index,elem){
+       console.log(index + elem);
+   })
+    $('li').contents('p').css('background-color', 'red');
+   $('li.third-item').nextAll().andSelf()
+           .css('background-color', 'red');
 
 
-    //    $('li').add('p').css('background-color', 'red');
-//    $('li').slice(2,3).css('background-color', 'red');
+       $('li').add('p').css('background-color', 'red');
+   $('li').slice(2,3).css('background-color', 'red');
 
-    //    $('li').not(':contains(2)').css('background-color', 'red');
-    //$('li').eq(2).css('background-color', 'red');
-//    $('li').has('p').css('background-color', 'red');
-    //console.log($('#aa').is(':animated'));
-//    var newobj = $('li').map(function(index,elem){
-//        //console.log(index + elem);
-//        return index + elem;
-//    });
-//    console.log(newobj);
+       $('li').not(':contains(2)').css('background-color', 'red');
+    $('li').eq(2).css('background-color', 'red');
+   $('li').has('p').css('background-color', 'red');
+    console.log($('#aa').is(':animated'));
+   var newobj = $('li').map(function(index,elem){
+       console.log(index + elem);
+       return index + elem;
+   });
+   console.log(newobj);
 
 </script>
 </body>
