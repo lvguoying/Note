@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>腾讯图片轮番图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        #container {
+            position: relative;
+            margin: 100px auto;
+            width: 1000px;
+            height: 550px;
+        }
+
+        #big-img img {
+            width: 1000px;
+            height: 550px;
+        }
+
+        #big-img a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        #big-img li {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #small-img {
+            position: relative;
+            height: 100%;
+        }
+
+        #small-img li {
+            float: left;
+        }
+
+        #small-img img.selected {
+            border: 2px solid #FFFFFF;
+        }
+
+        #small-img img {
+            width: 75px;
+            height: 50px;
+            margin-right: 8px;
+            border: 0;
+        }
+
+        #slider-img {
+            /*width: 573px;*/
+            height: 53px;
+            overflow: hidden;
+            z-index: 9999999999;
+            position: absolute;
+            bottom: 17px;
+            left: 50%;
+            margin-left: -286px;
+        }
+
+        #btn {
+            overflow: hidden;
+            position: absolute;
+            bottom: 12px;
+            width: 664px;
+            margin-left: 170px;
+            z-index: 999999999;
+        }
+
+        #btn a {
+            width: 41px;
+            height: 69px;
+        }
+
+        #prev {
+            float: left;
+            background: url("img/btn.png") no-repeat -84px;
+        }
+
+        #prev:hover {
+            background: url("img/btn.png") no-repeat 0;
+        }
+
+        #next {
+            float: right;
+            background: url("img/btn.png") no-repeat -125px;
+        }
+
+        #next:hover {
+            float: right;
+            background: url("img/btn.png") no-repeat -41px;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content">
+        <ul id="big-img">
+            <li><a href="#"><img src="img2/01.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/02.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/03.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/04.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/05.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/06.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/07.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/08.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/09.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/10.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/11.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/12.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/13.jpg" alt=""></a></li>
+            <li><a href="#"><img src="img2/14.jpg" alt=""></a></li>
+        </ul>
+        <div id="slider">
+            <div id="btn">
+                <a id="prev" href="javascript:;"></a>
+                <a id="next" href="javascript:;"></a>
+            </div>
+            <div id="slider-img">
+                <ul id="small-img">
+                    <li><a href="#"><img class="selected" src="img2/01.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/02.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/03.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/04.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/05.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/06.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/07.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/08.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/09.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/10.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/11.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/12.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/13.jpg" alt=""></a></li>
+                    <li><a href="#"><img src="img2/14.jpg" alt=""></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="myjslib.js"></script>
+<script>
+
+    window.onload = function () {
+        (function () {
+            var oContainer = document.getElementById('container');
+            var oSliderImg = document.getElementById('slider-img');
+            var oBig = document.getElementById('big-img');
+            var aBigLi = oBig.getElementsByTagName('li');
+            var oSmall = document.getElementById('small-img');
+            var aSmallLi = oSmall.getElementsByTagName('li');
+            var aSmallImg = oSmall.getElementsByTagName('img');
+            var oPrev = document.getElementById('prev');
+            var oNext = document.getElementById('next');
+            var zIndex = aBigLi.length;
+            var index = 0;
+            var bFlag = true; //定义左右切换状态
+            var sliderWidth = (aSmallImg[1].offsetWidth + 10) * 7 - 14;  //(10margin+4border)
+            var sliderMaxWidth = aSmallLi[1].offsetWidth * aSmallLi.length + 4;  //4border
+            var timer = null;
+
+            oSmall.style.width = sliderMaxWidth + 'px';
+            oSliderImg.style.width = sliderWidth + 'px';
+            for (var i = 0; i < aBigLi.length; i++) {
+                aBigLi[i].style.zIndex = zIndex - i;
+                aBigLi[i].index = i;
+                aSmallLi[i].index = i;
+                aSmallImg[i].index = i;
+                aSmallImg[i].onmouseover = function () {
+                    index = this.index;
+                    changeImg(index);
+                }
+            }
+            function changeImg(index) {
+                for (var i = 0; i < aSmallLi.length; i++) {
+                    aSmallImg[i].className = '';
+                    aSmallImg[index].className = 'selected';
+                }
+                aBigLi[index].style.opacity = 0;
+                aBigLi[index].style.filter = 'alpha(opacity=0)';
+                aBigLi[index].style.zIndex = ++zIndex;
+                animate(aBigLi[index], {opacity: 100});
+            }
+
+            oPrev.onclick = function () {
+                slide();
+            };
+            oNext.onclick = function () {
+                slide();
+            };
+
+            function slide() {  //滑动slider
+                if (bFlag) {
+                    index = aBigLi.length / 2;
+                    animate(oSmall, {left: -sliderMaxWidth / 2 + 2});
+                    changeImg(index)
+                } else {
+                    index = 0;
+                    animate(oSmall, {left: 0});
+                    changeImg(index);
+                }
+                bFlag = !bFlag;
+            }
+
+            function run() {
+                timer = setInterval(function () {
+                    changeImg(++index % aBigLi.length);
+                    if (index == aBigLi.length / 2 || index == aBigLi.length) {  //当索引到7或14的时候滑动slider
+                        slide();
+                    }
+                }, 2000)
+            }
+
+            run();
+
+            oContainer.onmousemove = function () {
+                clearInterval(timer);
+            };
+            oContainer.onmouseout = function () {
+                run();
+            };
+
+        })();
+    }
+</script>
+</body>
+</html>
