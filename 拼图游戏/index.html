@@ -227,7 +227,7 @@
                 for (var i = 0; i < 3; i++) {
                     for (var j = 0; j < 3; j++) {
                         ctx.drawImage(image, 300 * j, 300 * i, 300, 300, 0, 0, 300, 300);
-                        $lis.eq(imgArr[index - 1] - 1).find('img').data('seq', index).attr('src', canvas.toDataURL('image/jpeg'));
+                        // $lis.eq(imgArr[index - 1] - 1).find('img').data('seq', index).attr('src', canvas.toDataURL('image/jpeg'));
                         index++;
                     }
                 }
