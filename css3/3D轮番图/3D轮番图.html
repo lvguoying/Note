@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>3D轮番图</title>
@@ -47,9 +48,7 @@
         }
 
         @keyframes show {
-            0% {
-
-            }
+            0% {}
             50% {
                 transform: rotateX(-15deg);
             }
@@ -114,44 +113,44 @@
         }
     </style>
 </head>
+
 <body>
-<div id="container">
-    <div id="img">
-        <img class="show" src="img/1.jpg" alt="">
-        <img src="img/2.jpg" alt="">
-        <img src="img/3.jpg" alt="">
-        <img src="img/4.jpg" alt="">
+    <div id="container">
+        <div id="img">
+            <img class="show" src="img/1.jpg" alt="">
+            <img src="img/2.jpg" alt="">
+            <img src="img/3.jpg" alt="">
+            <img src="img/4.jpg" alt="">
+        </div>
+        <span id="prev">&lt;</span>
+        <span id="next">&gt;</span>
     </div>
-    <span id="prev">&lt;</span>
-    <span id="next">&gt;</span>
-</div>
 
-<script>
+    <script>
+        var oContainer = document.getElementById('container');
+        var aImg = oContainer.getElementsByTagName('img');
+        var oPrev = document.getElementById('prev');
+        var oNext = document.getElementById('next');
+        var index = 0; //全局索引
 
-    var oContainer = document.getElementById('container');
-    var aImg = oContainer.getElementsByTagName('img');
-    var oPrev = document.getElementById('prev');
-    var oNext = document.getElementById('next');
-    var index = 0;  //全局索引
+        oNext.onclick = function () {
+            aImg[index].className = 'hide';
+            index++;
+            if (index == aImg.length) {
+                index = 0;
+            }
+            aImg[index].className = 'show';
+        };
 
-    oNext.onclick = function () {
-        aImg[index].className = 'hide';
-        index++;
-        if (index == aImg.length) {
-            index = 0;
+        oPrev.onclick = function () {
+            aImg[index].className = 'hide';
+            index--;
+            if (index == -1) {
+                index = aImg.length - 1;
+            }
+            aImg[index].className = 'show';
         }
-        aImg[index].className = 'show';
-    };
-
-    oPrev.onclick = function () {
-        aImg[index].className = 'hide';
-        index--;
-        if (index == -1) {
-            index = aImg.length - 1;
-        }
-        aImg[index].className = 'show';
-    }
-
-</script>
+    </script>
 </body>
+
 </html>
