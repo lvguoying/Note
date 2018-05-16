@@ -84,10 +84,18 @@
             timeHandle: null,
             isComplete: false,
             level: 0,
-            levels: [
-                { time: "60.00", image: "shulan.jpg" },
-                { time: "40.00", image: "tuzi.jpg" },
-                { time: "30.00", image: "together.jpg" }
+            levels: [{
+                    time: "60.00",
+                    image: "shulan.jpg"
+                },
+                {
+                    time: "40.00",
+                    image: "tuzi.jpg"
+                },
+                {
+                    time: "30.00",
+                    image: "together.jpg"
+                }
             ],
             bind: function () {
                 //阻止手机上浏览器的弹性下拉。。。
@@ -174,11 +182,11 @@
                     }
                     App.resetData();
                     App.countdown();
-                    $('#layer').hide();//弹出层隐藏
+                    $('#layer').hide(); //弹出层隐藏
                 });
                 $('#reset').on('tap click', function () {
-                    App.resetData();//重置关卡和剩余时间
-                    App.countdown();//倒计时
+                    App.resetData(); //重置关卡和剩余时间
+                    App.countdown(); //倒计时
                     App.randomImage(true);
                 });
             },
@@ -190,7 +198,7 @@
                     var currTime = (time - 0.01).toFixed(2);
                     if (currTime < 0) {
                         clearInterval(App.timeHandle);
-                        $time.text(parseInt(currTime).toFixed(2));//当前时间置为0
+                        $time.text(parseInt(currTime).toFixed(2)); //当前时间置为0
                         App.update();
                     } else {
                         $time.text(currTime);
