@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<!-- <script src="./jquery.min.js"></script> -->
+
+<body>
+    <style>
+        /* banner */
+
+        a,
+        li,
+        div,
+        span,
+        ul {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        #Q-scroll .dotBtn span:hover {
+            transform: scale(1.1);
+            will-change: transform;
+        }
+    </style>
+    <div id="Q-scroll">
+        <ul class="banner">
+            <li class="active">
+                <a href="/plus/view.php?aid=135">
+                    <img src="http://www.runyuanzs.com/templets/default/images/banner_750.png" alt="">
+                </a>
+            </li>
+            <li>
+                <a href="/plus/view.php?aid=3104">
+                    <img src="http://www.runyuanzs.com/uploads/allimg/170528/1-1F52QF3110-L.png" alt="">
+                </a>
+            </li>
+        </ul>
+        <a href="javascript:void(0)" class="arrow prev">
+        </a>
+        <a href="javascript:void(0)" class="arrow next"></a>
+        <div class="dotBtn">
+        </div>
+    </div>
+    <script>
+        /*  
+         **  轮播图  
+         **  * container 轮播图容器  
+         */
+        function Q_scroll(obj) {
+            var arrowCol = obj.arrowCol ? obj.arrowCol : '#fff';
+            var arrowBg = obj.arrowBg ? boj.arrowBg : 'rgba(0,0,0,.3)';
+            var arrowWidth = obj.arrowWidth ? boj.arrowWidth : '10%';
+            var arrowHeight = obj.arrowHeight ? boj.arrowHeight : '100%';
+            var prevLeft = obj.prevLeft ? boj.prevLeft : 0;
+            var prevTop = obj.prevTop ? boj.prevTop : 0;
+            var nextRight = obj.nextRight ? boj.nextRight : 0;
+            var nextTop = obj.nextTop ? boj.nextTop : 0;
+            // 容器  
+            var container = document.getElementById(obj.container);
+            container.style.display = "block";
+            container.style.position = "relative";
+            container.style.zIndex = 5;
+            // 图片设置样式  
+            (function img(imgCon) {
+                var imgCon = container.getElementsByTagName('img');
+                var len = imgCon.length;
+                // while (len--) {
+                    imgCon[0].style.display = 'block';
+                    // imgCon[1].style.width = '100%';
+                // }
+            }());
+            // 遍历滚动的元素  
+            var libannerMain = container.getElementsByTagName('ul')[0];
+            var libanner = libannerMain.getElementsByTagName('li');
+            var liLen = libanner.length;
+            var dotspan = [];
+            while (liLen--) {
+                dotspan.unshift(
+                    '<span style="cursor:pointer;display:inline-block;width:1.5em;height:1.5em;margin:0 .3em;border-radius:50%;background:#fff;line-height:1.5em;text-align:center;transition:all .3s;">' +
+                    parseInt(liLen + 1) + '</span>');
+            }
+            var dot = getClassName(container, 'dotBtn')[0];
+            dot.style.cssText = ";position:absolute;width:100%;text-align:center;left:0;bottom:2%;";
+            dot.innerHTML = dotspan.join('');
+            each_for_block(libanner, 'none');
+            var liactive = getClassName(libannerMain, 'active')[0];
+            liactive.style.display = 'block';
+            // 左右箭头  
+            function arrow() {
+                var arrow = getClassName(container, 'arrow');
+                var aCon = container.getElementsByTagName('a');
+                each_for_block(aCon, 'block');
+                var key = arrow.length;
+                while (key--) {
+                    var conHight = container.offsetHeight;
+                    arrow[key].style.width = arrowWidth;
+                    arrow[key].style.height = arrowHeight;
+                    arrow[key].style.position = 'absolute';
+                    arrow[key].style.color = arrowCol;
+                    arrow[key].style.textAlign = 'center';
+                    arrow[key].style.fontSize = '5rem';
+                    arrow[key].style.background = arrowBg;
+                    if (arrow[key].parentNode == container) {
+                        arrow[key].style.lineHeight = conHight + 'px';
+                    }
+                    var len = arrow[key].classList.length;
+                    while (len--) {
+                        if (arrow[key].classList[len] == 'prev') {
+                            arrow[key].style.left = prevLeft;
+                            arrow[key].style.top = prevTop;
+                        }
+                        if (arrow[key].classList[len] == 'next') {
+                            arrow[key].style.right = nextRight;
+                            arrow[key].style.top = nextTop;
+                        }
+                    }
+                }
+            };
+            arrow();
+            window.onresize = function () {
+                arrow()
+            };
+            (function () {
+                var run = 0;
+                var i = 0;
+                var len = libanner.length;
+
+                function autoRun() {
+                    clearInterval(run);
+                    run = setInterval(function () {
+                        i++;
+                        // console.log(i)  
+                        if (i >= len) {
+                            i = 0;
+                        }
+                        lunbo(i);
+                    }, 4000);
+                };
+                autoRun();
+                container.onmouseover = function () {
+                    clearInterval(run);
+                };
+                container.onmouseout = function () {
+                    autoRun();
+                };
+
+                function lunbo(i) {
+                    var liLen = libanner.length;
+                    while (liLen--) {
+                        dot.getElementsByTagName('span')[liLen].style.background = "#fff";
+                        dot.getElementsByTagName('span')[liLen].style.color = "#000";
+                        libanner[liLen].style.display = 'none';
+                        if (libanner[liLen].className == 'active') {
+                            // console.log(2)  
+                            libanner[liLen].className = '';
+                        } else if (libanner[liLen].classList.length) {
+                            var classlen = libanner[liLen].classList.length;
+                            console.log(classlen)
+                        }
+                    }
+                    // console.log(libanner[i])  
+                    libanner[i].style.display = 'block';
+                    libanner[i].className = 'active';
+                    dot.getElementsByTagName('span')[i].style.background = "#adf";
+                    dot.getElementsByTagName('span')[i].style.color = "#fff";
+                }
+                getClassName(container, 'next')[0].onclick = function () {
+                    i++;
+                    if (i >= len) {
+                        i = 0;
+                    }
+                    lunbo(i);
+                };
+                getClassName(container, 'prev')[0].onclick = function () {
+                    i--;
+                    if (i < 0) {
+                        i = len - 1;
+                    }
+                    lunbo(i);
+                };
+            }());
+        }
+        /*  
+         **  遍历，设置display=block||none;  
+         **  ele 要设置样式的元素  
+         **  sty 'block' or 'none'  
+         */
+        function each_for_block(ele, sty) {
+            for (var key in ele) {
+                if (parseInt(key) == 0 || parseInt(key)) {
+                    ele[key].style.display = sty;
+                }
+            }
+        }
+        //根据类名查找  
+        /*  
+         **  ele 所要查找元素的父级  
+         **  cla 所要查找元素的类名  
+         */
+        function getClassName(ele, cla) {
+            ele = ele ? ele : document;
+            if (!ele.getElementsByClassName) {
+                var list = ele.getElementsByTagName('*');
+                var arr = [];
+                var eleLen = list.length;
+                for (var i = 0; i < eleLen; i++) {
+                    var len = list[i].classList.length;
+                    while (len--) {
+                        if (list[i].classList[len] == cla) {
+                            arr.push(list[i]);
+                        }
+                    }
+                }
+                return arr;
+            } else {
+                return ele.getElementsByClassName(cla);
+            }
+        }
+        Q_scroll({
+            container: 'Q-scroll'
+        });
+    </script>
+</body>
+
+</html>
